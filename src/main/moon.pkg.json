@@ -1,6 +1,4 @@
 {
   "is-main": true,
-  "import": [
-    "hanbings/chongming/lib"
-  ]
+  "import": []
 }
