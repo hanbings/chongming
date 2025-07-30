@@ -12,10 +12,10 @@ pub struct Node[K, V] {
 /// 
 /// The skip list maintains multiple levels of ordered linked lists.
 pub struct SkipList[K, V] {
-  mut level : Int       // Current effective height (starts from 1)
-  max_level : Int       // Maximum allowed height
-  p : Double            // Probability factor for random level generation
-  head : Node[K, V]     // Sentinel head node (must have full next array)
+  mut level : Int // Current effective height (starts from 1)
+  max_level : Int // Maximum allowed height
+  p : Double // Probability factor for random level generation
+  head : Node[K, V] // Sentinel head node (must have full next array)
 }
 
 ///|
