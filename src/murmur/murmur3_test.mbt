@@ -1,6 +1,6 @@
 ///|
 test "hash::murmur3::with_seed" {
-  let hasher = @hash.with_seed(0)
+  let hasher = with_seed(0)
   hasher.update(['h', 'e', 'l', 'l', 'o', ' '])
   hasher.update(['w', 'o', 'r', 'l', 'd'])
   let hash = hasher.digest()
