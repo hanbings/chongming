@@ -27,6 +27,21 @@ pub fn wrapping_add(a : UInt, b : UInt) -> UInt {
   sum & 0xFFFF_FFFF
 }
 
+///| Performs wrapping (modulo 2³²) subtraction of two unsigned integers.
+///
+/// This function simulates 32-bit unsigned integer subtraction. The result is
+/// truncated to the lower 32 bits, wrapping on underflow.
+///
+/// # Examples
+/// ```
+/// assert_eq(wrapping_sub(0, 1), 0xFFFF_FFFF)
+/// assert_eq(wrapping_sub(0x12345678, 0x87654321), 0x8ACF1357)
+/// ```
+pub fn wrapping_sub(a : UInt, b : UInt) -> UInt {
+  let diff = (a.to_int64() - b.to_int64()).reinterpret_as_uint64().to_uint()
+  diff & 0xFFFF_FFFF
+}
+
 ///| Rotates a 32-bit unsigned integer to the left by a given number of bits.
 ///
 /// Bits shifted out from the left end are wrapped around to the right end.
