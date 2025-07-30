@@ -12,6 +12,23 @@ pub fn wrapping_mul(a : UInt, b : UInt) -> UInt {
   ((a.to_uint64() * b.to_uint64()) & 0xFFFF_FFFF).to_uint()
 }
 
+///| Performs wrapping (modulo 2³²) multiplication of two signed integers.
+/// 
+/// This function treats both signed integers as unsigned 64-bit, multiplies
+/// them, and truncates the result to the lower 32 bits. The final result is
+/// reinterpreted as a signed 32-bit integer.
+/// 
+/// ### Examples
+/// ```
+/// assert_eq(wrapping_mul_int(-1, 2), -2)
+/// assert_eq(wrapping_mul_int(123456, -654321), -173166336)
+/// ```
+pub fn wrapping_mul_int(a : Int, b : Int) -> Int {
+  ((a.to_uint64() * b.to_uint64()) & 0xFFFF_FFFF)
+  .reinterpret_as_int64()
+  .to_int()
+}
+
 ///| Performs wrapping (modulo 2³²) addition of two unsigned integers.
 /// 
 /// This function simulates 32-bit unsigned integer addition. The result is
@@ -23,6 +40,21 @@ pub fn wrapping_mul(a : UInt, b : UInt) -> UInt {
 /// assert_eq(wrapping_add(0x12345678, 0x87654321), 0x99999999)
 /// ```
 pub fn wrapping_add(a : UInt, b : UInt) -> UInt {
+  let sum = (a.to_int64() + b.to_int64()).reinterpret_as_uint64().to_uint()
+  sum & 0xFFFF_FFFF
+}
+
+///| Performs wrapping (modulo 2³²) addition of two signed integers.
+/// 
+/// This function adds two signed integers, reinterprets the result as a 32-bit
+/// unsigned integer with wrapping semantics.
+/// 
+/// ### Examples
+/// ```
+/// assert_eq(wrapping_add_int(2147483647, 1), 2147483648)
+/// assert_eq(wrapping_add_int(-1, -1), 4294967294)
+/// ```
+pub fn wrapping_add_int(a : Int, b : Int) -> UInt {
   let sum = (a.to_int64() + b.to_int64()).reinterpret_as_uint64().to_uint()
   sum & 0xFFFF_FFFF
 }
