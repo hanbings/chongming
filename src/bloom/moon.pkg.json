@@ -1,1 +1,6 @@
-{}
+{
+    "import": [
+        "hanbings/chongming/xxhash",
+        "hanbings/chongming/utils"
+    ]
+}

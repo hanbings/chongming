@@ -51,9 +51,9 @@ pub fn digest(self : XxHash32) -> UInt {
   let mut hash : UInt = 0
   if self.total_len >= 16 {
     hash = @utils.rotate_left(self.v1, 1)
-hash = @utils.wrapping_add(hash, @utils.rotate_left(self.v2, 7))
-hash = @utils.wrapping_add(hash, @utils.rotate_left(self.v3, 12))
-hash = @utils.wrapping_add(hash, @utils.rotate_left(self.v4, 18))
+    hash = @utils.wrapping_add(hash, @utils.rotate_left(self.v2, 7))
+    hash = @utils.wrapping_add(hash, @utils.rotate_left(self.v3, 12))
+    hash = @utils.wrapping_add(hash, @utils.rotate_left(self.v4, 18))
   } else {
     hash = @utils.wrapping_add(self.seed, PRIME5)
   }
@@ -67,10 +67,11 @@ hash = @utils.wrapping_add(hash, @utils.rotate_left(self.v4, 18))
     hash = @utils.wrapping_mul(hash, PRIME4)
     idx = idx + 4
   }
-
-  // 处理剩余的 1-3 字节
   while idx < self.buffer.length() {
-    hash = @utils.wrapping_add(hash, @utils.wrapping_mul(self.buffer[idx].to_uint(), PRIME5))
+    hash = @utils.wrapping_add(
+      hash,
+      @utils.wrapping_mul(self.buffer[idx].to_uint(), PRIME5),
+    )
     hash = @utils.rotate_left(hash, 11)
     hash = @utils.wrapping_mul(hash, PRIME1)
     idx = idx + 1
@@ -87,8 +88,6 @@ hash = @utils.wrapping_add(hash, @utils.rotate_left(self.v4, 18))
 pub fn update(self : XxHash32, input : Array[Byte]) -> Unit {
   let mut input = input
   self.total_len += input.length()
-
-  // 如果之前 buffer 不为空，先填满 buffer 16字节
   if !self.buffer.is_empty() {
     let needed = 16 - self.buffer.length()
     if input.length() < needed {
